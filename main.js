@@ -104,7 +104,7 @@ loadChatgptDB();
 
 /* ------------------------------------------------*/
 
-global.authFile = `MichiBot`
+global.authFile = `PokeBOT`
 const {state, saveState, saveCreds} = await useMultiFileAuthState(global.authFile)
 const msgRetryCounterMap = (MessageRetryMap) => { };
 const msgRetryCounterCache = new NodeCache()
@@ -167,7 +167,7 @@ const connectionOptions = {
 logger: pino({ level: 'silent' }),
 printQRInTerminal: opcion == '1' ? true : methodCodeQR ? true : false,
 mobile: MethodMobile, 
-browser: opcion == '1' ? ['MichiBot', 'Edge', '2.0.0'] : methodCodeQR ? ['MichiBot', 'Edge', '2.0.0'] : ['Chrome (Linux)', '', ''],
+browser: opcion == '1' ? ['PokeBOT', 'Edge', '2.0.0'] : methodCodeQR ? ['PokeBOT', 'Edge', '2.0.0'] : ['Chrome (Linux)', '', ''],
 auth: {
 creds: state.creds,
 keys: makeCacheableSignalKeyStore(state.keys, Pino({ level: "fatal" }).child({ level: "fatal" })),
@@ -253,7 +253,7 @@ if (connection == 'open') {
 console.log(chalk.bold.greenBright(lenguajeGB['smsConexion']()))}
 let reason = new Boom(lastDisconnect?.error)?.output?.statusCode
 if (reason == 405) {
-await fs.unlinkSync("./GataBotSession/" + "creds.json")
+await fs.unlinkSync("./PokeBOT/" + "creds.json")
 return console.log(chalk.bold.redBright("\n[ ❌ ] CONEXION REPLAZADA, POR FAVOR ESPERE UN MOMENTO ME VOY A REINICIAR...\nSI SALE ERROR VUELVE A INICIAR CON: npm start")) 
 process.send('reset')}
 if (connection === 'close') {
@@ -420,7 +420,7 @@ unlinkSync(filePath)})
 
 function purgeSession() {
 let prekey = []
-let directorio = readdirSync("./MichiBot")
+let directorio = readdirSync("./PokeBOT")
 let filesFolderPreKeys = directorio.filter(file => {
 return file.startsWith('pre-key-')
 })
@@ -432,17 +432,17 @@ unlinkSync(`./MichiBot/${files}`)
 
 function purgeSessionSB() {
 try {
-const listaDirectorios = readdirSync('./MichiBot/');
+const listaDirectorios = readdirSync('./PokeBOT/');
 let SBprekey = [];
 listaDirectorios.forEach(directorio => {
-if (statSync(`./MichiBot/${directorio}`).isDirectory()) {
+if (statSync(`./PokeBOT/${directorio}`).isDirectory()) {
 const DSBPreKeys = readdirSync(`./GataJadiBot/${directorio}`).filter(fileInDir => {
 return fileInDir.startsWith('pre-key-')
 })
 SBprekey = [...SBprekey, ...DSBPreKeys];
 DSBPreKeys.forEach(fileInDir => {
 if (fileInDir !== 'creds.json') {
-unlinkSync(`./MichiBot/${directorio}/${fileInDir}`)
+unlinkSync(`./PokeBOT/${directorio}/${fileInDir}`)
 }})
 }})
 if (SBprekey.length === 0) {
@@ -454,7 +454,7 @@ console.log(chalk.bold.red(lenguajeGB.smspurgeSessionSB3() + err))
 }}
 
 function purgeOldFiles() {
-const directories = ['./MichiBot/', './GataJadiBot/']
+const directories = ['./PokeBOT/', './GataJadiBot/']
 directories.forEach(dir => {
 readdirSync(dir, (err, files) => {
 if (err) throw err
